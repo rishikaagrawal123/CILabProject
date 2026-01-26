@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven-3'
+        jdk 'JDK-11'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -10,26 +15,26 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'mvn clean compile'
+                powershell 'mvn clean compile'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'mvn test'
+                powershell 'mvn test'
             }
         }
 
         stage('Package') {
             steps {
-                bat 'mvn package'
+                powershell 'mvn package'
             }
         }
     }
 
     post {
         always {
-            junit '**/target/surefire-reports/*.xml'
+            junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
             archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
         }
     }

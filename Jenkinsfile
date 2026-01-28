@@ -15,19 +15,19 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'mvn clean compile'
+                bat 'C:\\Windows\\System32\\cmd.exe /c mvn clean compile'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'mvn test'
+                bat 'C:\\Windows\\System32\\cmd.exe /c mvn test'
             }
         }
 
         stage('Package') {
             steps {
-                bat 'mvn package'
+                bat 'C:\\Windows\\System32\\cmd.exe /c mvn package'
             }
         }
     }

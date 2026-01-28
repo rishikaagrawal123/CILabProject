@@ -15,19 +15,19 @@ pipeline {
 
         stage('Build') {
             steps {
-                powershell 'mvn clean compile'
+                bat 'mvn clean compile'
             }
         }
 
         stage('Test') {
             steps {
-                powershell 'mvn test'
+                bat 'mvn test'
             }
         }
 
         stage('Package') {
             steps {
-                powershell 'mvn package'
+                bat 'mvn package'
             }
         }
     }

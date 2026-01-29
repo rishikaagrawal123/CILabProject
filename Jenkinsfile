@@ -7,35 +7,22 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Build') {
             steps {
-                bat 'mvn clean compile'
+                bat '%MAVEN_HOME%\\bin\\mvn.cmd clean compile'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'mvn test'
+                bat '%MAVEN_HOME%\\bin\\mvn.cmd test'
             }
         }
 
         stage('Package') {
             steps {
-                bat 'mvn package'
+                bat '%MAVEN_HOME%\\bin\\mvn.cmd package'
             }
-        }
-    }
-
-    post {
-        always {
-            junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
-            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
         }
     }
 }

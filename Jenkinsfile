@@ -1,41 +1,18 @@
 pipeline {
     agent any
-
-    tools {
-        maven 'Maven3'
-        jdk 'Java17'
+    environment {
+        CI = 'true'
     }
-
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Build') {
             steps {
-                bat 'C:\\Windows\\System32\\cmd.exe /c mvn clean compile'
+                sh 'npm install'
             }
         }
-
         stage('Test') {
             steps {
-                bat 'C:\\Windows\\System32\\cmd.exe /c mvn test'
+                sh './jenkins/scripts/test.sh'
             }
-        }
-
-        stage('Package') {
-            steps {
-                bat 'C:\\Windows\\System32\\cmd.exe /c mvn package'
-            }
-        }
-    }
-
-    post {
-        always {
-            junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
-            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
         }
     }
 }
